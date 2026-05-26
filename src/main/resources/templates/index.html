@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plan your dream trip with TravelPlanner. Compare flights, hotels, attractions and estimate total travel costs.">
+    <title>TravelPlanner — Plan Your Dream Trip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+
+<!-- Floating Abstract Travel Shapes (cursor-responsive) -->
+<div class="floating-elements" id="floatingElements">
+    <div class="float-shape shape-plane" data-speed="0.04">
+        <svg viewBox="0 0 512 512"><path d="M505 23.2c9.4 9.4 9.4 24.6 0 33.9L390.2 172l45.2 135.5c2.4 7.1 .4 14.9-5.1 20.1l-30.6 28.5c-6.7 6.2-16.8 6.5-23.8.7L256 260.4l-79.5 79.5 22.3 55.8c2.8 7-0.7 15-7.7 17.8l-39.3 15.7c-7 2.8-15-.7-17.8-7.7L112 360l-60.6 22c-7 2.8-15-.7-17.8-7.7L18 335c-2.8-7 .7-15 7.7-17.8l60.6-22L25.7 233.6c-5.8-7-5.5-17.1.7-23.8L55 179.2c5.2-5.5 13-7.5 20.1-5.1L210.6 219.3l114.8-114.8c9.4-9.4 9.4-24.6 0-33.9l0 0L471.1 23.2c9.4-9.4 24.6-9.4 33.9 0z"/></svg>
+    </div>
+    <div class="float-shape shape-suitcase" data-speed="0.03">
+        <svg viewBox="0 0 512 512"><path d="M176 56V96H336V56c0-4.4-3.6-8-8-8H184c-4.4 0-8 3.6-8 8zM128 96V56c0-30.9 25.1-56 56-56H328c30.9 0 56 25.1 56 56V96v32V480c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V128 96zM64 128H96V480H64c-35.3 0-64-28.7-64-64V192c0-35.3 28.7-64 64-64zM448 480H416V128h32c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64z"/></svg>
+    </div>
+    <div class="float-shape shape-compass" data-speed="0.05">
+        <svg viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
+    </div>
+    <div class="float-shape shape-hotel" data-speed="0.025">
+        <svg viewBox="0 0 512 512"><path d="M0 32C0 14.3 14.3 0 32 0H480c17.7 0 32 14.3 32 32s-14.3 32-32 32V448c17.7 0 32 14.3 32 32s-14.3 32-32 32H304V464c0-26.5-21.5-48-48-48s-48 21.5-48 48v48H32c-17.7 0-32-14.3-32-32s14.3-32 32-32V64C14.3 64 0 49.7 0 32zm96 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V112c0-8.8-7.2-16-16-16H112c-8.8 0-16 7.2-16 16zM240 96c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V112c0-8.8-7.2-16-16-16H240zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V112c0-8.8-7.2-16-16-16H368c-8.8 0-16 7.2-16 16zM112 192c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V208c0-8.8-7.2-16-16-16H112zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V208c0-8.8-7.2-16-16-16H240c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V208c0-8.8-7.2-16-16-16H368z"/></svg>
+    </div>
+    <div class="float-shape shape-palm" data-speed="0.035">
+        <svg viewBox="0 0 576 512"><path d="M288 0c17.7 0 32 14.3 32 32V74.7C339.3 67.5 360.5 64 384 64c59.2 0 116.2 19.7 145.1 56.4C540.6 135.1 576 186.1 576 264c0 10.3-1.2 20.5-3.6 30.5-10.2 43.7-39.4 79.5-79 100.9-33.6 18.2-73.5 26.6-115.4 26.6-34.2 0-66.2-5.9-93.6-15.7C275.3 387 264 368.5 264 348c0-20 10.6-37.3 28.3-48.8 7.4-4.8 16.1-8.8 25.7-12V32c0-17.7 14.3-32 32-32zM0 264c0-77.9 35.4-128.9 46.9-143.6C75.8 83.7 132.8 64 192 64c23.5 0 44.7 3.5 64 10.7V32c0-17.7 14.3-32 32-32s32 14.3 32 32V287.2c-9.6 3.2-18.3 7.2-25.7 12C276.6 310.7 266 328 266 348L224 480l-32 0c-53 0-96-43-96-96l0-60.7c-38.1-8.8-72.9-28-96-60.7C0 262.7 0 263.3 0 264z"/></svg>
+    </div>
+    <div class="float-shape shape-map" data-speed="0.045">
+        <svg viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+    </div>
+    <div class="float-shape shape-globe" data-speed="0.02">
+        <svg viewBox="0 0 512 512"><path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 172.4 151.6zm-420.7 0c30.4-74.1 94.2-130.9 172.4-151.6C beckoned-25.5 34.1-45.3 87.7-55.3 151.6H72.4zM256 0c-37.4 0-73.9 68.3-89.6 160H345.6C329.9 68.3 293.4 0 256 0zm0 512c37.4 0 73.9-68.3 89.6-160H166.4C182.1 443.7 218.6 512 256 512zM8.1 320H131.2c10 63.9 29.8 117.4 55.3 151.6C108.2 450.9 44.4 394.1 8.1 320zM376.7 320H503.9c-30.4 74.1-94.2 130.9-172.4 151.6c25.5-34.2 45.3-87.7 55.3-151.6z"/></svg>
+    </div>
+    <div class="float-shape shape-camera" data-speed="0.055">
+        <svg viewBox="0 0 512 512"><path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 384a112 112 0 1 1 0-224 112 112 0 1 1 0 224z"/></svg>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/"><i class="fas fa-globe-americas"></i>TravelPlanner</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: var(--border-glass);">
+            <i class="fas fa-bars" style="color: var(--text-primary);"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+                <li class="nav-item"><a class="nav-link active" href="/"><i class="fas fa-home"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/search"><i class="fas fa-search"></i>Plan Trip</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reviews"><i class="fas fa-star"></i>Reviews</a></li>
+                <li class="nav-item" id="nav-dashboard" style="display:none;"><a class="nav-link" href="/dashboard"><i class="fas fa-th-large"></i>Dashboard</a></li>
+                <li class="nav-item" id="nav-login"><a class="btn btn-outline-custom btn-sm-custom ms-2" href="/login">Sign In</a></li>
+                <li class="nav-item" id="nav-user" style="display:none;">
+                    <div class="d-flex align-items-center gap-2 ms-2">
+                        <span class="nav-link" id="nav-username" style="color: var(--cherry) !important;"></span>
+                        <button class="btn btn-outline-custom btn-sm-custom" onclick="logout()">Logout</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7" style="position: relative; z-index: 1;">
+                <h1 class="hero-title">
+                    Explore the World<br>
+                    <span class="gradient-text">Plan Smarter</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Compare flights, trains & buses. Find perfect hotels. Discover attractions.
+                    Get an instant cost estimate for your entire trip — all in one place.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="/search" class="btn btn-primary-custom">
+                        <i class="fas fa-paper-plane"></i> Start Planning
+                    </a>
+                    <a href="/register" class="btn btn-outline-custom">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">50+</div>
+                        <div class="hero-stat-label">Routes</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">200+</div>
+                        <div class="hero-stat-label">Hotels</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">100+</div>
+                        <div class="hero-stat-label">Attractions</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block" style="position: relative; z-index: 1;">
+                <!-- Cursor-responsive hero illustration -->
+                <div class="hero-illustration" id="heroIllustration">
+                    <div class="abstract-item" data-speed="0.06" style="top: 10%; left: 20%; opacity: 0.12;">
+                        <i class="fas fa-plane" style="font-size: 7rem; color: var(--cherry); transform: rotate(-25deg);"></i>
+                    </div>
+                    <div class="abstract-item" data-speed="0.04" style="top: 45%; left: 55%; opacity: 0.08;">
+                        <i class="fas fa-hotel" style="font-size: 5rem; color: var(--cherry-light);"></i>
+                    </div>
+                    <div class="abstract-item" data-speed="0.08" style="top: 15%; left: 65%; opacity: 0.06;">
+                        <i class="fas fa-map-marker-alt" style="font-size: 4rem; color: var(--cherry);"></i>
+                    </div>
+                    <div class="abstract-item" data-speed="0.05" style="top: 60%; left: 15%; opacity: 0.07;">
+                        <i class="fas fa-suitcase-rolling" style="font-size: 4.5rem; color: var(--rose);"></i>
+                    </div>
+                    <div class="abstract-item" data-speed="0.03" style="top: 70%; left: 60%; opacity: 0.05;">
+                        <i class="fas fa-compass" style="font-size: 5.5rem; color: var(--cherry-dark);"></i>
+                    </div>
+                    <div class="abstract-item" data-speed="0.07" style="top: 30%; left: 35%; opacity: 0.10;">
+                        <i class="fas fa-globe-americas" style="font-size: 9rem; color: var(--cherry-soft);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5" style="position: relative; z-index: 1;">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Features</span>
+            <h2 class="section-title">Everything You Need to Plan</h2>
+            <p class="section-subtitle">From finding the cheapest flights to estimating your total budget, we've got you covered.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100">
+                    <div class="feature-icon blue"><i class="fas fa-plane"></i></div>
+                    <h5 class="feature-title">Travel Search</h5>
+                    <p class="feature-desc">Compare flights, trains, and buses between cities. Filter by price, duration, and ratings.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100">
+                    <div class="feature-icon purple"><i class="fas fa-hotel"></i></div>
+                    <h5 class="feature-title">Accommodation</h5>
+                    <p class="feature-desc">Browse hotels, hostels, and homestays. Filter by budget, ratings, and amenities.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100">
+                    <div class="feature-icon cyan"><i class="fas fa-map-marked-alt"></i></div>
+                    <h5 class="feature-title">Tourist Attractions</h5>
+                    <p class="feature-desc">Discover popular places to visit at your destination. Add them to your itinerary.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100">
+                    <div class="feature-icon green"><i class="fas fa-calculator"></i></div>
+                    <h5 class="feature-title">Cost Estimator</h5>
+                    <p class="feature-desc">Get a complete trip budget including transport, hotel, food, local transport, and entry fees.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100">
+                    <div class="feature-icon pink"><i class="fas fa-star"></i></div>
+                    <h5 class="feature-title">Reviews & Ratings</h5>
+                    <p class="feature-desc">Read and submit reviews for transport, hotels, and attractions from real travelers.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100">
+                    <div class="feature-icon orange"><i class="fas fa-bookmark"></i></div>
+                    <h5 class="feature-title">Save Itinerary</h5>
+                    <p class="feature-desc">Save your planned trips and access them anytime from your personal dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 my-5" style="position: relative; z-index: 1;">
+    <div class="container">
+        <div class="glass-card text-center" style="padding: 4rem 2rem;">
+            <h2 style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 1rem;">
+                Ready to <span class="text-gradient">Explore?</span>
+            </h2>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin: 0 auto 2rem;">
+                Start planning your next adventure today. It takes less than a minute.
+            </p>
+            <a href="/search" class="btn btn-primary-custom">
+                <i class="fas fa-rocket"></i> Plan Your Trip Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="footer-brand">🌍 TravelPlanner</div>
+                <p class="footer-text">Your all-in-one travel planning companion. Plan smarter, travel better.</p>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h6 class="footer-heading">Navigate</h6>
+                <a href="/" class="footer-link">Home</a>
+                <a href="/search" class="footer-link">Plan Trip</a>
+                <a href="/reviews" class="footer-link">Reviews</a>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h6 class="footer-heading">Account</h6>
+                <a href="/login" class="footer-link">Sign In</a>
+                <a href="/register" class="footer-link">Register</a>
+                <a href="/dashboard" class="footer-link">Dashboard</a>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <h6 class="footer-heading">About</h6>
+                <p class="footer-text">Built as a full-stack travel planning application with Spring Boot, MySQL, and Bootstrap.</p>
+            </div>
+        </div>
+        <hr style="border-color: var(--border-glass); margin: 2rem 0 1.5rem;">
+        <p class="text-center footer-text">&copy; 2026 TravelPlanner. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/app.js}" src="/js/app.js"></script>
+<script>checkAuth();</script>
+</body>
+</html>
